@@ -3,15 +3,15 @@ name: Test, Build, and Deploy | Modul 01 - Lab2.2 Senior Project
 on:
   push:
     branches: [main]
- 
+
 jobs:
   test-build:
     runs-on: ubuntu-latest
- 
+
     strategy:
       matrix:
         node-version: [16.x]
- 
+
     steps:
       - uses: actions/checkout@v4
       - name: Testing Build pre-Deploy
@@ -22,14 +22,10 @@ jobs:
       - run: npm i
       - run: npm run build
 
-    deploy:
+  deploy:
     needs: test-build
     runs-on: ubuntu-latest
- 
-    strategy:
-      matrix:
-        node-version: [16.x]
- 
+
     steps:
       - name: Build app on VM
         uses: appleboy/ssh-action@master
@@ -43,7 +39,7 @@ jobs:
             ssh-add ~/.ssh/ssh-praktikan46
             echo "Cek folder project";
             [ ! -d "${HOME}/senpro/518670/modul02/senpro-github-action/" ] &&
- 
+
             {
               echo "Repository belum di-clone. Cloning...";
               mkdir -p ~/senpro/518670/modul02;
